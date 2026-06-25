@@ -1,112 +1,85 @@
-# Сегментация человека и замена фона
+# Person Background Replacement
 
-Streamlit-приложение для сегментации человека и замены фона на изображениях и видео. Проект использует модель сегментации в стиле Mobile U-Net с энкодером MobileNetV2: модель предсказывает маску человека, после чего исходный фон заменяется на изображение, выбранное пользователем.
+Person Background Replacement — web application for replacing the background behind a person in images using a custom Mobile U-Net segmentation model.
 
-Репозиторий включает ноутбук с обучением модели, переиспользуемые функции инференса, CLI-интерфейсы для обработки изображений и видео, а также интерактивный веб-интерфейс на Streamlit.
+The project demonstrates a practical computer vision pipeline: model training, person mask prediction, background replacement, CLI inference, and deployment as a Streamlit web app.
 
-## Демо
+## Demo
 
-### Демо для изображения
+**Live app:** [person-background-replacement Streamlit demo](https://person-background-replacement-4a4wyhoyvftepbrytn6xff.streamlit.app)
 
-Исходное изображение и новый фон:
+### Image Demo
 
-![Исходное изображение и фон](assets/readme_image0.png)
+Source image and replacement background:
 
-Результат замены фона на изображении:
+![Source image and background](assets/readme_image0.png)
 
-![Результат замены фона на изображении](assets/readme_image1.png)
+Image background replacement result:
 
-### Демо для видео
+![Image background replacement result](assets/readme_image1.png)
 
-Загруженное видео и фон в Streamlit-приложении:
+### Video Demo
 
-![Загруженное видео и фон в Streamlit-приложении](assets/readme_video0.png)
+Uploaded video and replacement background in the Streamlit app:
 
-Результат обработки видео в Streamlit-приложении:
+![Uploaded video and background in Streamlit app](assets/readme_video0.png)
 
-![Результат обработки видео в Streamlit-приложении](assets/readme_video1.png)
+Processed video result in the Streamlit app:
 
-Готовое демо-видео: [assets/output-video.mp4](assets/output-video.mp4)
+![Processed video result in Streamlit app](assets/readme_video1.png)
 
-## Возможности
+Processed demo video: [assets/output-video.mp4](assets/output-video.mp4)
 
-- Сегментация человека
-- Замена фона на изображениях
-- Замена фона на видео
-- Веб-интерфейс на Streamlit
-- CLI-инференс для изображений
-- CLI-инференс для видео
+## Features
 
-## Стек технологий
+- Person segmentation using Mobile U-Net
+- Background replacement for uploaded images
+- TensorFlow/Keras inference pipeline
+- Streamlit web interface
+- CLI inference for images
+- CLI inference for videos
+- Deployed on Streamlit Cloud
+
+## Tech Stack
 
 - Python
 - TensorFlow / Keras
-- MobileNetV2
-- U-Net style decoder
 - OpenCV
 - NumPy
+- Pillow
 - Streamlit
-- Albumentations
-- scikit-learn
-- Matplotlib
-- Pandas
 
-## Структура проекта
+## Project Structure
 
 ```text
-.
-├── app_streamlit.py          # Streamlit-приложение
-├── main_image.py             # CLI для замены фона на изображениях
-├── main_video.py             # CLI для замены фона на видео
-├── src/
-│   ├── inference.py          # Инференс для изображений, маски и сохранение результатов
-│   ├── video.py              # Покадровая обработка видео
-│   ├── model.py              # Архитектура Mobile U-Net / MobileNetV2
-│   ├── losses.py             # Пользовательские loss-функции и метрики
-│   └── __init__.py
-├── notebooks/
-│   └── training.ipynb        # Обучение модели
-├── examples/                 # Примеры входных изображений, фона и видео
-├── assets/                   # Демо-материалы для README
-├── models/                   # Ожидаемое расположение обученной модели
-├── outputs/                  # Результаты инференса
-├── requirements.txt
-├── .gitignore
-└── README.md
+app_streamlit.py  - Streamlit web interface
+src/              - model, losses, inference and video utilities
+notebooks/        - training notebook
+examples/         - sample input files
+models/           - trained model
+outputs/          - generated results
 ```
 
-## Модель
+## Model
 
-Для инференса требуется файл обученной модели. Большие файлы модели игнорируются через `.gitignore`, поэтому обученная модель не должна храниться в GitHub-репозитории.
+The project uses a Mobile U-Net style segmentation model with a MobileNetV2 encoder. The model is trained to predict a person mask, which is then used to composite the original person over a new background.
 
-Ожидаемый путь к обученной Keras-модели:
+Expected model path:
 
 ```text
 models/mobile_unet_model.keras
 ```
 
-## Установка
+## How to Run Locally
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
 pip install -r requirements.txt
+streamlit run app_streamlit.py
 ```
 
-## Запуск Streamlit-приложения
+## CLI Inference
 
-```bash
-python -m streamlit run app_streamlit.py
-```
-
-В приложении доступны две вкладки:
-
-- `Image` для загрузки исходного изображения и нового фона
-- `Video` для загрузки исходного видео и нового фона
-
-## Инференс для изображения
-
-Пример запуска замены фона на изображении из командной строки:
+Image inference:
 
 ```bash
 python3 main_image.py \
@@ -117,9 +90,7 @@ python3 main_image.py \
   --mask-output outputs/mask_image.png
 ```
 
-## Инференс для видео
-
-Пример запуска замены фона на видео из командной строки:
+Video inference:
 
 ```bash
 python3 main_video.py \
@@ -130,28 +101,23 @@ python3 main_video.py \
   --max-frames 120
 ```
 
-Параметр `--max-frames` удобно использовать для быстрых тестов. Если его не указывать, будет обработано всё видео.
+## Training
 
-## Обучение
-
-Обучение модели находится в ноутбуке:
+The training workflow is stored in:
 
 ```text
 notebooks/training.ipynb
 ```
 
-Ноутбук содержит workflow обучения модели сегментации человека на основе Mobile U-Net / MobileNetV2.
+It contains the model training process for person segmentation with a MobileNetV2 encoder and U-Net style decoder.
 
-## Примечания
+## Portfolio Note
 
-- Для инференса нужен файл обученной модели.
-- Большие файлы модели не добавляются в GitHub.
-- Демо-материалы хранятся в `assets/`.
-- Инференс видео выполняется покадрово, поэтому обработка длинных видео может занимать заметное время.
+This project is designed as a portfolio ML/CV project. It demonstrates the full computer vision workflow: training a segmentation model, running inference, replacing image and video backgrounds, building a web interface, and deploying the app to Streamlit Cloud.
 
-## TODO
+## Notes
 
-- Улучшить качество сегментации
-- Добавить больше примеров
-- Подготовить деплой
-- Оптимизировать инференс видео
+- A trained model file is required for inference.
+- Large model files should be handled with Git LFS.
+- Demo screenshots and the processed demo video are stored in `assets/`.
+- Video inference is processed frame by frame, so longer videos can take more time.
