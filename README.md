@@ -1,46 +1,46 @@
 # Person Background Replacement
 
-Person Background Replacement — web application for replacing the background behind a person in images using a custom Mobile U-Net segmentation model.
+Person Background Replacement — веб-приложение для замены фона за человеком на изображениях с использованием собственной модели сегментации Mobile U-Net.
 
-The project demonstrates a practical computer vision pipeline: model training, person mask prediction, background replacement, CLI inference, and deployment as a Streamlit web app.
+Проект демонстрирует полный computer vision pipeline: обучение модели, предсказание маски человека, замену фона, CLI-инференс и деплой веб-приложения на Streamlit Cloud.
 
-## Demo
+## Демо
 
 **Live app:** [person-background-replacement Streamlit demo](https://person-background-replacement-4a4wyhoyvftepbrytn6xff.streamlit.app)
 
-### Image Demo
+### Демо для изображений
 
-Source image and replacement background:
+Исходное изображение и новый фон:
 
 ![Source image and background](assets/readme_image0.png)
 
-Image background replacement result:
+Результат замены фона на изображении:
 
 ![Image background replacement result](assets/readme_image1.png)
 
-### Video Demo
+### Демо для видео
 
-Uploaded video and replacement background in the Streamlit app:
+Загруженное видео и фон в Streamlit-приложении:
 
 ![Uploaded video and background in Streamlit app](assets/readme_video0.png)
 
-Processed video result in the Streamlit app:
+Результат обработки видео в Streamlit-приложении:
 
 ![Processed video result in Streamlit app](assets/readme_video1.png)
 
-Processed demo video: [assets/output-video.mp4](assets/output-video.mp4)
+Готовое демо-видео: [assets/output-video.mp4](assets/output-video.mp4)
 
-## Features
+## Возможности
 
-- Person segmentation using Mobile U-Net
-- Background replacement for uploaded images
-- TensorFlow/Keras inference pipeline
-- Streamlit web interface
-- CLI inference for images
-- CLI inference for videos
-- Deployed on Streamlit Cloud
+- Сегментация человека с помощью Mobile U-Net
+- Замена фона для загруженных изображений
+- Инференс-пайплайн на TensorFlow/Keras
+- Веб-интерфейс на Streamlit
+- CLI-инференс для изображений
+- CLI-инференс для видео
+- Деплой на Streamlit Cloud
 
-## Tech Stack
+## Стек технологий
 
 - Python
 - TensorFlow / Keras
@@ -49,7 +49,7 @@ Processed demo video: [assets/output-video.mp4](assets/output-video.mp4)
 - Pillow
 - Streamlit
 
-## Project Structure
+## Структура проекта
 
 ```text
 app_streamlit.py  - Streamlit web interface
@@ -60,26 +60,26 @@ models/           - trained model
 outputs/          - generated results
 ```
 
-## Model
+## Модель
 
-The project uses a Mobile U-Net style segmentation model with a MobileNetV2 encoder. The model is trained to predict a person mask, which is then used to composite the original person over a new background.
+В проекте используется модель сегментации в стиле Mobile U-Net с энкодером MobileNetV2. Модель обучена предсказывать маску человека, которая затем используется для наложения человека с исходного изображения на новый фон.
 
-Expected model path:
+Ожидаемый путь к модели:
 
 ```text
 models/mobile_unet_model.keras
 ```
 
-## How to Run Locally
+## Локальный запуск
 
 ```bash
 pip install -r requirements.txt
 streamlit run app_streamlit.py
 ```
 
-## CLI Inference
+## CLI-инференс
 
-Image inference:
+Инференс для изображения:
 
 ```bash
 python3 main_image.py \
@@ -90,7 +90,7 @@ python3 main_image.py \
   --mask-output outputs/mask_image.png
 ```
 
-Video inference:
+Инференс для видео:
 
 ```bash
 python3 main_video.py \
@@ -101,23 +101,23 @@ python3 main_video.py \
   --max-frames 120
 ```
 
-## Training
+## Обучение
 
-The training workflow is stored in:
+Ноутбук с обучением находится здесь:
 
 ```text
 notebooks/training.ipynb
 ```
 
-It contains the model training process for person segmentation with a MobileNetV2 encoder and U-Net style decoder.
+В нём описан процесс обучения модели сегментации человека на основе MobileNetV2 encoder и U-Net style decoder.
 
-## Portfolio Note
+## Для портфолио
 
-This project is designed as a portfolio ML/CV project. It demonstrates the full computer vision workflow: training a segmentation model, running inference, replacing image and video backgrounds, building a web interface, and deploying the app to Streamlit Cloud.
+Проект оформлен как портфолио-кейс для Junior ML Engineer / Data Scientist. Он показывает полный цикл работы над ML/CV-задачей: обучение модели сегментации, инференс, замену фона на изображениях и видео, создание веб-интерфейса и деплой приложения на Streamlit Cloud.
 
-## Notes
+## Примечания
 
-- A trained model file is required for inference.
-- Large model files should be handled with Git LFS.
-- Demo screenshots and the processed demo video are stored in `assets/`.
-- Video inference is processed frame by frame, so longer videos can take more time.
+- Для инференса требуется файл обученной модели.
+- Большие файлы модели следует хранить через Git LFS.
+- Демо-скриншоты и обработанное демо-видео находятся в `assets/`.
+- Инференс видео выполняется покадрово, поэтому обработка длинных видео может занимать больше времени.
